@@ -8,9 +8,6 @@
     $.ajax({
       type: 'GET',
       url: serverUrl,
-      // cache: false,
-      // contentType: false,
-      // processData: false,
       error: () => {console.log('YOU ERRORED')},
       success: (data) => {
         var actions = data.split(',');
@@ -21,13 +18,14 @@
     });
   }
   getSwimCommand();
+
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
   const ajaxFileUplaod = (file) => {
-    console.log(file);
+    // console.log(file);
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
@@ -37,8 +35,10 @@
       cache: false,
       contentType: false,
       processData: false,
-      success: () => {
+      success: (data) => {
         // reload the page
+        console.log('success', data)
+
         window.location = window.location.href;
       }
     });
