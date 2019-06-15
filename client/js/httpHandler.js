@@ -1,7 +1,6 @@
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
-
   
   // TODO: build the swim command fetcher here
   const getSwimCommand = () => {
@@ -9,11 +8,11 @@
       type: 'GET',
       url: serverUrl,
       error: () => {console.log('YOU ERRORED')},
-      success: (data) => {
-        var actions = data.split(',');
-        for(var i = 0; i < actions.length; i++) {
-          SwimTeam.move(actions[i]);
-        }
+      success: (direction) => {
+        // var actions = data.split(',');
+        // for(var i = 0; i < actions.length; i++) {
+        SwimTeam.move(direction);
+        // }
       }
     });
   }
@@ -25,7 +24,6 @@
   /////////////////////////////////////////////////////////////////////
 
   const ajaxFileUplaod = (file) => {
-    // console.log(file);
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
@@ -38,7 +36,6 @@
       success: (data) => {
         // reload the page
         console.log('success', data)
-
         window.location = window.location.href;
       }
     });

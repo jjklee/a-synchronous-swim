@@ -1,7 +1,6 @@
 const httpHandler = require('./httpHandler.js')
 
 const messages = []; // the storage unit for messages
-module.exports.storage = () => (messages);
 
 module.exports.enqueue = (message) => {
   console.log(`Enqueing message: ${message}`);

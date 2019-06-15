@@ -13,30 +13,45 @@ module.exports.initialize = (queue) => {
   messageQueue = queue;
 };
 
-// NEED TO WRITE CONDITION TO FILTER BETWEEN IMAGE OR MESSAGE COMMAND
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  if (req.method === 'OPTIONS') {
+    res.writeHead(200, headers);
+    res.end();
+  }
 
-  if (req.method === 'POST') {
-    // fs.readFile('', function(err, contents) {
-    //   // console.log('file name', req.data.name)
-    //   console.log('contents',contents);
-      res.writeHead(200, headers);
-
-      req.on('data', (chunk) => {
-        console.log(chunk);
-      })
+  if (req.method === 'POST' && req.url === '/background.jpg') {
+    fs.readFile(module.exports.backgroundImageFile, (err, fileData) => {
+      if (err) {
+        res.writeHead(404);
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'image/jepg',
+          'Content-Length': fileData.length
+        });
+        res.write(fileData, 'binary');
+      }
       res.end();
-    // });
-    
+      next();
+    });
   }
   
+  // if (req.method === 'GET') {
+  //   res.writeHead(200, headers);
+  //   res.end(messageQueue.toString());
+  //   for(var i = 0; i < messageQueue.length; i++) {
+  //     messages.dequeue();
+  //   }
+  // }
+
   if (req.method === 'GET') {
     res.writeHead(200, headers);
-    // res.write(messageQueue);
-    res.end(messageQueue.toString());
-    for(var i = 0; i < messageQueue.length; i++) {
-      messages.dequeue();
+    var command = messages.dequeue();
+    if (command) {
+      console.log('Responding with:', command);
+      res.end(command);
+    } else {
+      res.end();
     }
   }
   // let commands = ['up', 'down', 'left', 'right'];
