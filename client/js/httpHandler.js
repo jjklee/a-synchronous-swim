@@ -2,22 +2,38 @@
 
   const serverUrl = 'http://127.0.0.1:3000';
 
-  //
+  
   // TODO: build the swim command fetcher here
-  //
-
+  const getSwimCommand = () => {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      // cache: false,
+      // contentType: false,
+      // processData: false,
+      error: () => {console.log('YOU ERRORED')},
+      success: (data) => {
+        var actions = data.split(',');
+        for(var i = 0; i < actions.length; i++) {
+          SwimTeam.move(actions[i]);
+        }
+      }
+    });
+  }
+  getSwimCommand();
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
   const ajaxFileUplaod = (file) => {
+    console.log(file);
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: 'http://127.0.0.1:3000',
       cache: false,
       contentType: false,
       processData: false,

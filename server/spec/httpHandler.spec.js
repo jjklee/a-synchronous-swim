@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const server = require('./mockServer');
 
 const httpHandler = require('../js/httpHandler');
-
+// http://127.0.0.1:3000
 
 
 describe('server responses', () => {
@@ -23,6 +23,20 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
+    let commands = ['up', 'down', 'left', 'right'];
+    let randomCommand = commands[Math.floor(Math.random()*4)];
+    console.log(randomCommand);
+    let {req, res} = server.mock('http://127.0.0.1:3000', 'GET', randomCommand);
+
+    httpHandler.router(req, res);
+    expect(res._responseCode).to.equal(200)
+    expect(res._ended).to.equal(true);
+    res.write(randomCommand)
+    // console.log(res._data);
+    // expect(res._data.toString()).to.be.empty;
+    expect(Buffer.compare(fileData, get.res._data)).to.equal(0);
+    expect(Buffer.compare(randomCommand, res._data)).to.equal(0);
+
     done();
   });
 
