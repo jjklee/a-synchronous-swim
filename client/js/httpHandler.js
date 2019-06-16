@@ -24,18 +24,17 @@
   /////////////////////////////////////////////////////////////////////
 
   const ajaxFileUplaod = (file) => {
+    console.log(file);
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'http://127.0.0.1:3000',
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
-      success: (data) => {
-        // reload the page
-        console.log('success', data)
+      success: () => {
         window.location = window.location.href;
       }
     });

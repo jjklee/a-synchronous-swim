@@ -1,16 +1,15 @@
 
 
 
+const queue = require('./js/messageQueue');
+
 const keypressHandler = require('./js/keypressHandler');
-const messages = require('./js/messageQueue');
 
-// keypressHandler.initialize(message => {
-//     messages.enqueue(message);
-//     console.log(`Message received: ${message}`)});
-
-keypressHandler.initialize(messages.enqueue);
+keypressHandler.initialize(queue.enqueue);
 
 const httpHandler = require('./js/httpHandler');
+
+httpHandler.initialize(queue);
 
 const http = require('http');
 const server = http.createServer(httpHandler.router);
@@ -21,3 +20,7 @@ server.listen(port, ip);
 
 console.log('Server is running in the terminal!');
 console.log(`Listening on http://${ip}:${port}`);
+
+// keypressHandler.initialize(message => {
+//     messages.enqueue(message);
+//     console.log(`Message received: ${message}`)});

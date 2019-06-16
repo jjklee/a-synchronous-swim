@@ -10,15 +10,15 @@ $('body').on('keydown', (event) => {
 console.log('Client is running in the browser!');
 
 
-const postSwimCommand = (direction) => {
-  console.log('init');
-  $.ajax({
-    type: 'POST',
-    url: 'http://127.0.0.1:3000',
-    data: direction,
-    error: () => {console.log('YOU ERRORED')},
-    success: (data) => {
-      console.log('data', data);
-    }
-  });
-}
+// const postSwimCommand = (direction) => {
+//   console.log('init');
+//   $.ajax({
+//     type: 'POST',
+//     url: 'http://127.0.0.1:3000',
+//     data: direction,
+//     error: () => {console.log('YOU ERRORED')},
+//     success: (data) => {
+//       console.log('data', data);
+//     }
+//   });
+// }

@@ -20,40 +20,41 @@ module.exports.router = (req, res, next = ()=>{}) => {
     res.end();
   }
 
-  if (req.method === 'POST' && req.url === '/background.jpg') {
+  if (req.url === '/background.jpg') {
+    console.log('init');
     fs.readFile(module.exports.backgroundImageFile, (err, fileData) => {
+      console.log(fileData);
       if (err) {
-        res.writeHead(404);
+        res.writeHead(404, headers);
+        res.end();
       } else {
-        res.writeHead(200, {
-          'Content-Type': 'image/jepg',
-          'Content-Length': fileData.length
-        });
+        res.writeHead(200, headers);
         res.write(fileData, 'binary');
+        
       }
       res.end();
       next();
     });
-  }
-  
-  // if (req.method === 'GET') {
+  } 
+  // else if (req.method === 'GET') {
   //   res.writeHead(200, headers);
-  //   res.end(messageQueue.toString());
-  //   for(var i = 0; i < messageQueue.length; i++) {
-  //     messages.dequeue();
-  //   }
-  // }
-
-  if (req.method === 'GET') {
+  //   res.write(messagesQueue.toString())
+    // for (var i = 0; i < messageQueue.length; i++) {
+    //   messages.dequeue();
+    // }
+  //   end();
+  // } 
+  else if (req.method === 'GET') {
     res.writeHead(200, headers);
-    var command = messages.dequeue();
+    var command = messageQueue.dequeue();
     if (command) {
       console.log('Responding with:', command);
-      res.end(command);
-    } else {
+      res.write(command)
       res.end();
     }
   }
+
+  
   // let commands = ['up', 'down', 'left', 'right'];
   // let randomCommand = commands[Math.floor(Math.random()*4)];
 
